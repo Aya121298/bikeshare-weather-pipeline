@@ -1,0 +1,11 @@
+requests==2.32.3
+pandas==2.2.2
+python-dotenv==1.0.1
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.30
+dbt-core==1.8.0
+dbt-postgres==1.8.0
+pytest==8.2.0
+great-expectations==0.18.15
+streamlit==1.35.0
+plotly==5.22.0
