@@ -226,3 +226,5 @@ logs/
 airflow.db
 .DS_Store
 .vscode/
+
+extraction/*.csv
