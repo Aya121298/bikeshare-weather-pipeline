@@ -1,47 +1,27 @@
 # Bikeshare & Weather Analytics Pipeline
 
-An end-to-end data pipeline that combines bike-share trip data with daily
-weather data to show how weather affects ridership. It demonstrates batch and
-incremental ingestion, dimensional modeling, orchestration, and automated testing.
+A data pipeline that combines bike-share trip data with daily weather data
+to analyze how weather affects ridership. Built to demonstrate batch and
+incremental ingestion, dimensional modeling, and orchestration.
 
-![Dashboard](docs/dashboard.png)
+## Stack
+Python · PostgreSQL 15 · Apache Airflow 2.9 · dbt · Docker Compose
 
-## The problem
-[One sentence: e.g. "Trip data and weather data live in separate sources, so
-there's no easy way to see how rain or temperature changes demand."]
+## Pipeline
+1. `extraction/extract_trips.py`: pulls bike-share trip data from [source]
+2. `extraction/extract_weather.py`: pulls daily weather data from [source]
+3. `extraction/load_raw.py`: loads both into raw tables in PostgreSQL
+4. `dbt/`: [describe your models once you check the folder]
+5. `dags/`: Airflow DAG(s) that schedule the pipeline
 
-## What I built
-- **Ingestion:** Python scripts pull [trip data source] and [weather API/source]
-  in batch and incremental loads
-- **Modeling:** dbt models turn raw data into a [star schema] with
-  [fact_trips, dim_date, dim_weather, ...]
-- **Orchestration:** Airflow DAGs schedule and run the whole pipeline daily
-- **Quality:** automated tests in `tests/` and dbt tests, run through GitHub Actions
-- **Deployment:** everything runs in Docker with one command
-- **Dashboard:** [tool] dashboard showing [2-3 key views]
+## Run locally
+1. `cp .env.example .env` and set the Postgres credentials
+2. `docker compose -f docker/docker-compose.yml --env-file .env up`
+3. Open Airflow at http://localhost:8080
 
-## Architecture
-![Architecture](docs/architecture.png)
-`Sources → Python extraction → [warehouse] → dbt models → Dashboard`
-                     orchestrated by Airflow
-
-## Tech stack
-Python · Airflow · dbt · Docker · [warehouse: PostgreSQL?] · GitHub Actions · [dashboard tool]
-
-## Key results
-- [Number] trips and [number] days of weather processed
-- [N] dbt/data quality tests passing
-- Insight: [e.g. "Ridership drops ~X% on days with rain"]
-
-## Run it locally
-1. `git clone https://github.com/Aya121298/bikeshare-weather-pipeline`
-2. `cp .env.example .env` and fill in your values
-3. `docker compose up` [adjust to your real command]
-4. Open Airflow at `http://localhost:8080` and trigger the DAG
-
-## Project structure
-`extraction/` ingestion scripts · `dags/` Airflow DAGs · `dbt/` models and tests ·
-`dashboard/` dashboard files · `docker/` container setup · `tests/` unit tests · `docs/` diagrams
+## Status
+Work in progress. Planned: data quality tests, CI with GitHub Actions,
+and a dashboard on top of the modeled tables.
 
 ## License
 MIT
